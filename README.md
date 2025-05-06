@@ -109,6 +109,7 @@ FOREIGN KEY (produto_id) REFERENCES produtos(id)
 
 ## 4. Organização do Código (MVC Simplificado)
 
+```
 LojaGames/
 │
 ├── src/
@@ -139,6 +140,8 @@ LojaGames/
 │ │ └── resources/ # Arquivos de configuração, SQL scripts (opcional)
 │
 └── pom.xml # (Se usar Maven) ou arquivos de build do Gradle
+```
+
 
 ## 5. Planejamento Ágil com 4 Devs (Exemplo)
 

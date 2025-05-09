@@ -12,12 +12,13 @@ Criar um sistema desktop de gerenciamento de vendas para uma loja de games. A ap
 
 | Área                | Ferramenta/Tecnologia                     |
 | :------------------ | :---------------------------------------- |
-| Linguagem           | Java (JDK 24)                            |
+| Linguagem           | [Java (JDK 24)](https://download.oracle.com/java/24/latest/jdk-24_windows-x64_bin.exe)                           |
 | Interface Gráfica   | Java Swing (com CardLayout) |
-| IDE                 | IntelliJ IDEA Community       |
-| Banco de Dados      | MySQL + MySQL Workbench                   |
+| IDE                 | [IntelliJ IDEA Community](https://www.jetbrains.com/pt-br/idea/download/download-thanks.html?platform=windows&code=IIC)
+)       |
+| Banco de Dados      | [MySQL](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.2.12/xampp-windows-x64-8.2.12-0-VS16-installer.exe) + [MySQL Workbench](https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.42-winx64.msi)                   |
 | Conexão BD          | JDBC (mysql-connector-java)             |
-| Controle de Versão | Git + GitHub                              |
+| Controle de Versão | [Git](https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/Git-2.49.0-64-bit.exe) + GitHub                              |
 | Gerenciamento       | Trello                         |
 
 ## 2. Estrutura de Banco de Dados (MySQL)

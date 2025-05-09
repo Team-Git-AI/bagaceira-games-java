@@ -24,10 +24,12 @@ Criar um sistema desktop de gerenciamento de vendas para uma loja de games. A ap
 
 usuarios
 ``` sql
-id INT AUTO_INCREMENT PRIMARY KEY
-nome VARCHAR(100) NOT NULL
-login VARCHAR(50) UNIQUE NOT NULL
-senha_hash VARCHAR(255) NOT NULL -- (Armazenar hash da senha)
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  login VARCHAR(50) UNIQUE NOT NULL,
+  senha_hash VARCHAR(255) NOT NULL -- (Armazenar hash da senha)
+);
 ```
 
 categorias
@@ -51,8 +53,8 @@ produtos
 CREATE TABLE produtos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
-  categoria_id TINYINT NOT NULL,
-  plataforma_id TINYINT NOT NULL,
+  categoria_id TINYINT NOT NULL, -- (Ex: Jogo, Console, Acessório)
+  plataforma_id TINYINT NOT NULL, -- (Ex: PlayStation 5, Xbox Series X, PC, Nintendo Switch)
   preco DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (categoria_id) REFERENCES categorias(id),
   FOREIGN KEY (plataforma_id) REFERENCES plataformas(id)
@@ -81,8 +83,12 @@ CREATE TABLE transacoes (
 
 itens_transacao
 ``` sql
+CREATE TABLE itens_transacao (
+  transacao_id INT NOT NULL,
+  produto_id INT NOT NULL,
   quantidade SMALLINT NOT NULL,
-  preco_unitario DECIMAL(10, 2) NOT NULL,
+  preco_unitario DECIMAL(10, 2) NOT NULL, -- Preço no momento da venda
+  PRIMARY KEY (transacao_id, produto_id),
   FOREIGN KEY (transacao_id) REFERENCES transacoes(id),
   FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );

@@ -10,16 +10,15 @@ Criar um sistema desktop de gerenciamento de vendas para uma loja de games. A ap
 
 ## 1. Ferramentas e Tecnologias
 
-| Área                | Ferramenta/Tecnologia                     |
-| :------------------ | :---------------------------------------- |
-| Linguagem           | [Java (JDK 24)](https://download.oracle.com/java/24/latest/jdk-24_windows-x64_bin.exe)                           |
-| Interface Gráfica   | Java Swing (com CardLayout) |
-| IDE                 | [IntelliJ IDEA Community](https://www.jetbrains.com/pt-br/idea/download/download-thanks.html?platform=windows&code=IIC)
-)       |
-| Banco de Dados      | [MySQL](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.2.12/xampp-windows-x64-8.2.12-0-VS16-installer.exe) + [MySQL Workbench](https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.42-winx64.msi)                   |
-| Conexão BD          | JDBC (mysql-connector-java)             |
-| Controle de Versão | [Git](https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/Git-2.49.0-64-bit.exe) + GitHub                              |
-| Gerenciamento       | Trello                         |
+| Área                 | Ferramenta/Tecnologia                                                                                                                                                                                                                         |
+|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Linguagem            | [Java (JDK 24)](https://download.oracle.com/java/24/latest/jdk-24_windows-x64_bin.exe)                                                                                                                                                        |
+| Interface Gráfica    | [Java Swing (com CardLayout)](https://docs.oracle.com/javase/8/docs/api/index.html?javax/swing/)                                                                                                                                                                                                               |
+| IDE                  | [IntelliJ IDEA Community](https://www.jetbrains.com/pt-br/idea/download/download-thanks.html?platform=windows&code=IIC)                                                                                                                       |
+| Banco de Dados       | [MySQL](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/8.2.12/xampp-windows-x64-8.2.12-0-VS16-installer.exe) + [MySQL Workbench](https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-8.0.42-winx64.msi) |
+| Conexão BD           | JDBC (mysql-connector-java)                                                                                                                                                                                                                   |
+| Controle de Versão   | [Git](https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/Git-2.49.0-64-bit.exe) + GitHub                                                                                                                              |
+| Gerenciamento        | [Trello](https://trello.com/b/tuoe0qsU/bagaceira-games)                                                                                                                                                                                       |
 
 ## 2. Estrutura de Banco de Dados (MySQL)
 
@@ -144,7 +143,7 @@ LojaGames/
 ├── src/
 │ ├── main/
 │ │ ├── java/
-│ │ │ └── com/seupacote/lojagames/
+│ │ │ └── bagaceiragames/
 │ │ │ ├── model/ # Classes de domínio (POJOs) >>Plain Old Java Objects<< Classe java "pelada", sem frameworks ou ferramentas na classe. Só código java puro.
 │ │ │ │ ├── Usuario.java
 │ │ │ │ ├── Produto.java
@@ -166,11 +165,10 @@ LojaGames/
 │ │ │ │ └── TransacaoDAO.java # Inclui métodos para salvar transação e itens
 │ │ │ └── main/ # Ponto de entrada da aplicação
 │ │ │ └── LojaGamesApp.java # Cria MainWindow e inicia a aplicação
-│ │ └── resources/ # Arquivos de configuração, SQL scripts (opcional)
+│ │ └── resources/SQLscripts/ # Arquivos de configuração, SQL scripts (opcional)
 │
 └── pom.xml # (Se usar Maven) ou arquivos de build do Gradle
 ```
-
 
 ## 5. Planejamento Ágil com 4 Devs (Exemplo)
 

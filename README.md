@@ -20,79 +20,15 @@ Criar um sistema desktop de gerenciamento de vendas para uma loja de games. A ap
 | Controle de Versão   | [Git](https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/Git-2.49.0-64-bit.exe) + GitHub                                                                                                                              |
 | Gerenciamento        | [Trello](https://trello.com/b/tuoe0qsU/bagaceira-games)                                                                                                                                                                                       |
 
-## 2. Estrutura de Banco de Dados (MySQL)
+## 2. Estrutura de Banco de Dados (Tablelas) (MySQL)
 
-usuarios
-``` sql
-CREATE TABLE usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  login VARCHAR(50) UNIQUE NOT NULL,
-  senha_hash VARCHAR(255) NOT NULL -- (Armazenar hash da senha)
-);
-```
-
-categorias
-``` sql
-CREATE TABLE categorias (
-  id TINYINT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(50) NOT NULL UNIQUE
-);
-```
-
-plataformas
-``` sql
-CREATE TABLE plataformas (
-  id TINYINT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(50) NOT NULL UNIQUE
-);
-```
-
-produtos
-``` sql
-CREATE TABLE produtos (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nome VARCHAR(100) NOT NULL,
-  categoria_id TINYINT NOT NULL, -- (Ex: Jogo, Console, Acessório)
-  plataforma_id TINYINT NOT NULL, -- (Ex: PlayStation 5, Xbox Series X, PC, Nintendo Switch)
-  preco DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (categoria_id) REFERENCES categorias(id),
-  FOREIGN KEY (plataforma_id) REFERENCES plataformas(id)
-);
-```
-
-estoque
-``` sql
-CREATE TABLE estoque (
-  produto_id INT PRIMARY KEY,
-  quantidade SMALLINT NOT NULL,
-  FOREIGN KEY (produto_id) REFERENCES produtos(id)
-);
-```
-
-transacoes
-``` sql
-CREATE TABLE transacoes (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL,
-  data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
-  total DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-```
-
-itens_transacao
-``` sql
-CREATE TABLE itens_transacao (
-  transacao_id INT NOT NULL,
-  produto_id INT NOT NULL,
-  quantidade SMALLINT NOT NULL,
-  preco_unitario DECIMAL(10, 2) NOT NULL, -- Preço no momento da venda
-  PRIMARY KEY (transacao_id, produto_id),
-  FOREIGN KEY (transacao_id) REFERENCES transacoes(id),
-  FOREIGN KEY (produto_id) REFERENCES produtos(id)
-);
-```
+- usuarios
+- categorias
+- plataformas
+- produtos
+- estoque
+- transacoes
+- itens_transacao
 
 ## 3. Interface Gráfica (Swing | Janela Única)
 
@@ -166,7 +102,7 @@ LojaGames/
 │ │ │ └── main/ # Ponto de entrada da aplicação
 │ │ │ └── LojaGamesApp.java # Cria MainWindow e inicia a aplicação
 │ │ └── resources/SQLscripts/ # Arquivos de configuração, SQL scripts (opcional)
-│
+│ └──
 └── pom.xml # (Se usar Maven) ou arquivos de build do Gradle
 ```
 

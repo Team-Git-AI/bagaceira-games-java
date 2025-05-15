@@ -12,6 +12,7 @@ public class ConexaoBD {
     private static final String URL = "jdbc:mysql://localhost:3306/loja_games_db";
     private static final String USUARIO = "root";
     private static final String SENHA = ""; // O padrão é vazio
+    private static final String PARAMS = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 
     /**
      * Estabelece e retorna uma conexão com o banco MySQL.
@@ -21,7 +22,7 @@ public class ConexaoBD {
      */
     public static Connection conectar() throws SQLException {
         try { // Tenta estabelecer a conexão
-            Connection conexao = DriverManager.getConnection(URL + USUARIO, SENHA);
+            Connection conexao = DriverManager.getConnection(URL + PARAMS, USUARIO, SENHA);
             return conexao;
 
         } catch (SQLException e) {
@@ -30,6 +31,7 @@ public class ConexaoBD {
             e.printStackTrace(); // Imprime o stack trace do erro para debug
             throw e; // Re-lança a exceção para que a classe chamadora possa tratá-la
         }
+    }
     /**
      * Método principal (main) testa a conexão com o banco
      * Verifica se as configurações de conexão estão corretas.
@@ -62,5 +64,5 @@ public class ConexaoBD {
                 }
             }
         }
-    }
-}
+    } // Fim do método main
+} // Fim da ConexaoBD

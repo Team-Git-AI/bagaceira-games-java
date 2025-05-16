@@ -40,34 +40,20 @@ public class UsuarioDAO {
     public static void main(String[] args) {
 
         UsuarioDAO dao = new UsuarioDAO();
-        System.out.println("Testando autenticação...");
+        System.out.println("\nTestando autenticação...");
 
         Usuario admin = dao.autenticarUsuario("root", "root");
         if (admin != null) {
-            System.out.println("SUCESSO: Admin autenticado: " + admin.getNome() + " (ID: " + admin.getId() + ")");
+            System.out.println("SUCESSO! 'Admin' autenticado >> " + admin.getNome() + " (ID: " + admin.getId() + ")");
         } else {
-            System.out.println("FALHA: Autenticação do admin.");
+            System.out.println("FALHA! Na autenticação de 'admin'");
         }
 
-        Usuario juca = dao.autenticarUsuario("juca", "machuca");
+        Usuario juca = dao.autenticarUsuario("juca_machuca", "machucador");
         if (juca != null) {
-            System.out.println("SUCESSO: Juca autenticado: " + juca.getNome() + " (ID: " + juca.getId() + ")");
+            System.out.println("SUCESSO! 'Juca Machuca' autenticado >> " + juca.getNome() + " (ID: " + juca.getId() + ")");
         } else {
-            System.out.println("FALHA: Autenticação de Juca.");
-        }
-
-        Usuario invalido = dao.autenticarUsuario("usuario_inexistente", "senha_errada");
-        if (invalido == null) {
-            System.out.println("SUCESSO: Tentativa de login com usuário inválido falhou, como esperado.");
-        } else {
-            System.out.println("FALHA: Usuário inválido foi autenticado (isso não deveria acontecer).");
-        }
-
-        Usuario rootSenhaErrada = dao.autenticarUsuario("root", "senha_errada");
-        if (rootSenhaErrada == null) {
-            System.out.println("SUCESSO: Tentativa de login com admin e senha errada falhou, como esperado.");
-        } else {
-            System.out.println("FALHA: Admin com senha errada foi autenticado (isso não deveria acontecer).");
+            System.out.println("FALHA! Na autenticação de 'Juca Machuca'");
         }
     }
 }

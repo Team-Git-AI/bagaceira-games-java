@@ -9,7 +9,7 @@ public class ConexaoBD {
     // --> Configurações da Conexão com o Banco de Dados
     // URL de conexão JDBC para o MySQL
     // Formato: jdbc:mysql://[host]:[porta]/[nome_do_banco_de_dados]
-    private static final String URL = "jdbc:mysql://localhost:3306/loja_games_db";
+    private static final String URL = "jdbc:mysql://localhost:3307/loja_games_db";
     private static final String USUARIO = "root";
     private static final String SENHA = ""; // O padrão é vazio
     private static final String PARAMS = "?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
@@ -41,7 +41,6 @@ public class ConexaoBD {
         try {
             System.out.println("Tentando conectar ao banco de dados...");
             conn = conectar(); // Chama o método de conexão
-
             if (conn != null) {
                 System.out.println("Conexão com o banco de dados '" + conn.getCatalog() + "' estabelecida com sucesso!");
                 System.out.println("URL: " + conn.getMetaData().getURL());
@@ -50,10 +49,8 @@ public class ConexaoBD {
                 System.err.println("Falha ao obter a conexão com o banco de dados.");
             }
         } catch (SQLException e) {
-            // A mensagem de erro já foi impressa dentro do método conectar()
             System.err.println("Não foi possível conectar ao banco. Verifique as configurações e o console para mais detalhes.");
         } finally {
-            // É uma boa prática fechar a conexão após o uso.
             if (conn != null) {
                 try {
                     conn.close();

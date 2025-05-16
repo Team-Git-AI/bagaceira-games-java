@@ -12,7 +12,6 @@ public class UsuarioDAO {
         String sql = "SELECT id, nome, login, senha FROM usuarios WHERE login = ? AND senha = ?";
         Usuario usuarioAutenticado = null;
 
-        // Usar "try" garante que "Connection", "PreparedStatement" e "ResultSet" sejam fechados
         try (Connection conexao = ConexaoBD.conectar(); // Obtém a conexão
              PreparedStatement pstmt = conexao.prepareStatement(sql)) {
 
@@ -35,7 +34,7 @@ public class UsuarioDAO {
         return usuarioAutenticado;
     }
 
-    // Método main para teste rápido do UsuarioDAO (opcional).
+    // Método main para teste rápido do UsuarioDAO
 
     public static void main(String[] args) {
 
@@ -46,14 +45,14 @@ public class UsuarioDAO {
         if (admin != null) {
             System.out.println("SUCESSO! 'Admin' autenticado >> " + admin.getNome() + " (ID: " + admin.getId() + ")");
         } else {
-            System.out.println("FALHA! Na autenticação de 'admin'");
+            System.out.println(">>FALHA<< Na autenticação de 'admin'");
         }
 
         Usuario juca = dao.autenticarUsuario("juca_machuca", "machucador");
         if (juca != null) {
             System.out.println("SUCESSO! 'Juca Machuca' autenticado >> " + juca.getNome() + " (ID: " + juca.getId() + ")");
         } else {
-            System.out.println("FALHA! Na autenticação de 'Juca Machuca'");
+            System.out.println(">>FALHA<< na autenticação de 'Juca Machuca'");
         }
     }
 }

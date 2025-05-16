@@ -8,3 +8,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     login VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL
 );
+
+INSERT INTO usuarios (nome, login, senha) VALUES ('Administrador', 'root', 'root');
+INSERT INTO usuarios (nome, login, senha) VALUES ('Juca Machuca', 'juca_machuca', 'machucador');

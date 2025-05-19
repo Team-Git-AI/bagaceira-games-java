@@ -1,3 +1,13 @@
+[![made Language {generic badge}](https://img.shields.io/badge/Made%20with-Java%20language-8A2BE2)](https://github.com/alanmugiwara)
+[![made Language {generic badge}](https://img.shields.io/badge/Made%20with-SQL%20language-8A2BE2)](https://github.com/alanmugiwara)
+[![create date](https://badges.pufler.dev/created/Team-Git-AI/bagaceira-games-java?color=8A2BE2)](https://github.com/alanmugiwara)
+[![last update date](https://badges.pufler.dev/Updated/Team-Git-AI/bagaceira-games-java?color=8A2BE2)](https://github.com/alanmugiwara)
+
+[![contributors](https://img.shields.io/github/contributors/alanmugiwara/login-system-c?color=8A2BE2)](https://github.com/alanmugiwara)
+[![issues counter](https://img.shields.io/github/issues/alanmugiwara/login-system-c?color=8A2BE2)](https://github.com/alanmugiwara)
+[![repo size](https://img.shields.io/github/repo-size/alanmugiwara/login-system-c?color=8A2BE2)](https://github.com/alanmugiwara)
+[![directory size](https://img.shields.io/github/directory-file-count/alanmugiwara/login-system-c?color=8A2BE2)](https://github.com/alanmugiwara)
+
 ## Projeto: Loja de Games — Aplicativo Java Swing com MySQL (Janela Única)
 
 ### Objetivo
@@ -70,6 +80,9 @@ Criar um sistema desktop de gerenciamento de vendas para uma loja de games. A ap
 
 #####  Outros:
 - Botão: JButton "Logout" (retorna ao LoginPanel).
+
+# Demonstração
+![Demonsraoção](https://github.com/Team-Git-AI/bagaceira-games-java/blob/main/src/main/resources/demo-img.gif?raw=true)
 
 ## 4. Organização do Código (MVC Simplificado)
 

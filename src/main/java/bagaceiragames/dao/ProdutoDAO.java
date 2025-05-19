@@ -50,9 +50,6 @@ public class ProdutoDAO {
      */
     public List<Produto> buscarProdutosPorFiltros(int idCategoria, int idPlataforma, String nomeProduto) {
         List<Produto> produtosFiltrados = new ArrayList<>();
-        // A lógica SQL aqui será mais complexa, construindo a query dinamicamente
-        // ou usando múltiplos `AND` com `OR` para condições opcionais.
-        // Exemplo muito simplificado:
         String sql = "SELECT id_produto, nome_produto, categoria_id, plataforma_id, preco_produto FROM produtos WHERE 1=1 ";
 
         if (idCategoria > 0) { //  0 ou valor negativo significa "sem filtro"

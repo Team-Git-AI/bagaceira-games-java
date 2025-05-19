@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
         cardLayout.show(mainPanel, name);
     }
 
-    // Getter para o CardLayout e mainPanel se necessário por controllers externos
+    // Getter para o CardLayout e mainPanel
     public CardLayout getCardLayout() {
         return cardLayout;
     }

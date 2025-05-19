@@ -6,7 +6,6 @@ public class ItemTransacao {
     private int produtoId;   // produto_id
     private int quantidadeVendida;
     private BigDecimal precoUnitarioNoMomentoVenda;
-    // private BigDecimal subtotalItem; // Pode ser calculado ou vir do banco se for coluna gerada
     // Getters e Setters
     // ... (implemente todos os getters e setters)
     public int getTransacaoId() { return transacaoId; }

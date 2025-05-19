@@ -60,14 +60,6 @@ public class EstoqueDAO {
      * @return true se bem-sucedido, false caso contrário.
      */
     public boolean atualizarOuInserirEstoque(int produtoId, int quantidade) {
-        // Seu script SQL para estoque já usa produto_id como PK, então não haverá duplicatas.
-        // Podemos usar INSERT ... ON DUPLICATE KEY UPDATE se o banco permitir e for mais conveniente,
-        // ou verificar primeiro se existe.
-        // Para o seu script:
-        // INSERT INTO estoque (produto_id, quantidade) VALUES (?, ?)
-        // ON DUPLICATE KEY UPDATE quantidade = VALUES(quantidade);
-        // Vamos fazer uma lógica de update ou insert separado por simplicidade aqui:
-
         if (getQuantidadeEstoque(produtoId) != -1) { // Se produto já existe no estoque
             String sqlUpdate = "UPDATE estoque SET quantidade = ? WHERE produto_id = ?";
             try (Connection conexao = ConexaoBD.conectar();

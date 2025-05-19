@@ -21,7 +21,7 @@ public class LoginPanel extends JPanel {
 
         btnEntrar = new JButton("Entrar");
 
-        // Adicionando componentes ao painel com GridBagLayout
+        // Adiciona componentes ao painel com GridBagLayout
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.EAST;

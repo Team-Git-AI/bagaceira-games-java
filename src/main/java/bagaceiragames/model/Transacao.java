@@ -8,8 +8,7 @@ public class Transacao {
     private BigDecimal valorTotal; // ou valor_total_transacao
     private String metodoPagamento;
     private String statusTransacao;
-    // Getters e Setters
-    // ... (implemente todos os getters e setters)
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public int getUsuarioId() { return usuarioId; }

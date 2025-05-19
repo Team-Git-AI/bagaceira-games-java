@@ -4,26 +4,40 @@ package bagaceiragames.controller;
 import bagaceiragames.dao.EstoqueDAO;
 import bagaceiragames.dao.ProdutoDAO;
 import bagaceiragames.dao.TransacaoDAO;
+// Se você criar DAOs para Categoria/Plataforma, importe-os aqui
+import bagaceiragames.dao.CategoriaDAO;
+import bagaceiragames.dao.PlataformaDAO;
+
+// Model (Classes de Domínio)
+import bagaceiragames.model.Produto;
 import bagaceiragames.model.Usuario;
+// import bagaceiragames.model.ItemCarrinho; // Para lógica do carrinho
 
 // View (Componentes da Interface Gráfica)
 import bagaceiragames.view.LojaPanel;
 import bagaceiragames.view.MainWindow;
 
+// Swing e AWT
+import javax.swing.JButton;
+import java.awt.event.ActionListener; // Para remover listeners específicos
+// import java.awt.event.ActionEvent; // Não é diretamente usado se usar lambdas
+import java.util.ArrayList;
+import java.util.List;
+// import java.util.stream.Collectors; // Para filtros em memória, se necessário
+
 public class LojaController {
 
-    private MainWindow mainWindow; // Janela principal
-    private LojaPanel lojaPanel;   // O painel da interface da loja
-    private Usuario usuarioLogado; // Informações do usuário logado
-
+    private MainWindow mainWindow;
+    private LojaPanel lojaPanel;
+    private Usuario usuarioLogado;
+    private ProdutoDAO produtoDAO;
     private EstoqueDAO estoqueDAO;
     private TransacaoDAO transacaoDAO;
-    // private CategoriaDAO categoriaDAO;   // Opcional: DAO para gerenciar categorias
-    // private PlataformaDAO plataformaDAO; // Opcional: DAO para gerenciar plataformas
+    private CategoriaDAO categoriaDAO;
+    private PlataformaDAO plataformaDAO;
 
-    // Estruturas de dados para gerenciar o estado da loja
-    // private List<Produto> cacheProdutosExibidos; // Lista de produtos atualmente mostrados na UI
-    // private List<ItemCarrinho> carrinhoDeCompras; // Itens no carrinho do usuário
+    private List<Produto> cacheProdutosExibidos; // Para otimizar a exibição
+    // private List<ItemCarrinho> carrinhoDeCompras;
 
     /**
      * Construtor do LojaController.
@@ -34,109 +48,122 @@ public class LojaController {
         this.mainWindow = mainWindow;
         this.lojaPanel = lojaPanel;
         this.usuarioLogado = usuarioLogado;
-        // DAOs para interagir com o banco de dados
+        this.produtoDAO = produtoDAO;
         this.estoqueDAO = estoqueDAO;
         this.transacaoDAO = transacaoDAO;
 
-        // Inicializa listas internas (serão mais usadas nos Sprints 2 e 3)
         // this.cacheProdutosExibidos = new ArrayList<>();
         // this.carrinhoDeCompras = new ArrayList<>();
 
         System.out.println("LojaController instanciado para o usuário: " +
                 (this.usuarioLogado != null ? this.usuarioLogado.getNome() : "N/A"));
 
-        // Configura os listeners para os eventos da UI do LojaPanel
-        // Esta chamada pode ser movida para um método que é invocado quando o LojaPanel se torna ativo
-        // initListeners(); // Descomente quando o LojaPanel tiver os botões e campos
+        // Os listeners serão configurados quando a interface da loja for preparada.
     }
 
-    public LojaController(MainWindow mainWindow, LojaPanel lojaPanel, ProdutoDAO produtoDAO, EstoqueDAO estoqueDAO, TransacaoDAO transacaoDAO) {
-    }
+    // O CONSTRUTOR DUPLICADO FOI REMOVIDO.
 
     /**
      * Método chamado quando o LojaPanel é exibido.
-     * Responsável por carregar dados iniciais como categorias para filtros,
-     * plataformas para filtros e a lista inicial de produtos.
+     * Responsável por carregar dados iniciais e configurar listeners.
      */
     public void prepararInterfaceLoja() {
-        System.out.println("LojaController: Preparando interface da loja...");
-        if (usuarioLogado != null) {
-            // lojaPanel.setMensagemBoasVindas("Bem-vindo(a), " + usuarioLogado.getNome() + "!"); // Exemplo
+        if (this.lojaPanel == null) {
+            System.err.println("LojaController (prepararInterfaceLoja): lojaPanel é null! Não é possível preparar a interface.");
+            return;
         }
+        System.out.println("LojaController: Preparando interface da loja...");
 
-        // Lógica do Sprint 2:
-        // carregarFiltros();
-        // carregarProdutosIniciais();
+        // Lógica para carregar dados (Sprint 2 em diante)
+        carregarFiltros(); // Preenche JComboBoxes
+        carregarProdutosIniciais(); // Carrega a lista inicial de produtos
 
-        // Configurar listeners agora que o painel está prestes a ser exibido
-        initListeners(); // Ou chame de um método da MainWindow quando o painel é mostrado
+        // Configura todos os listeners da UI do LojaPanel
+        initListeners();
     }
 
     /**
      * Inicializa os listeners para os componentes da interface do LojaPanel.
-     * (Botões de filtro, adicionar ao carrinho, finalizar compra, logout, etc.)
      */
     private void initListeners() {
-        System.out.println("LojaController: Inicializando listeners (a implementar)...");
-        // Exemplo para um botão de logout (você precisará criar este botão no LojaPanel)
-        // JButton btnLogout = lojaPanel.getBtnLogout(); // Supondo que LojaPanel tenha getBtnLogout()
-        // if (btnLogout != null) {
-        //     // Remove listeners antigos para evitar múltiplas execuções se initListeners for chamado mais de uma vez
-        //     for (ActionListener al : btnLogout.getActionListeners()) {
-        //         btnLogout.removeActionListener(al);
-        //     }
-        //     btnLogout.addActionListener(e -> fazerLogout());
-        // }
+        if (this.lojaPanel == null) {
+            System.err.println("LojaController (initListeners): lojaPanel é null! Não é possível adicionar listeners.");
+            return;
+        }
+        System.out.println("LojaController: Inicializando listeners...");
 
-        // TODO SPRINT 2: Adicionar listeners para filtros de categoria, plataforma e busca por nome
-        // lojaPanel.getComboCategorias().addActionListener(e -> aplicarFiltrosEAtualizarProdutos());
-        // lojaPanel.getComboPlataformas().addActionListener(e -> aplicarFiltrosEAtualizarProdutos());
-        // lojaPanel.getTxtBuscaNome().addActionListener(e -> aplicarFiltrosEAtualizarProdutos()); // ou DocumentListener
+        // --- Listener para o Botão de Logout ---
+        JButton btnLogout = this.lojaPanel.getBtnLogout();
+        if (btnLogout != null) {
+            // Remove listeners antigos para evitar duplicação se este método for chamado mais de uma vez
+            for (ActionListener al : btnLogout.getActionListeners()) {
+                btnLogout.removeActionListener(al);
+            }
+            btnLogout.addActionListener(e -> fazerLogout());
+            System.out.println("LojaController: Listener de Logout adicionado.");
+        } else {
+            System.err.println("LojaController: Botão de logout (getBtnLogout) retornou null no LojaPanel.");
+        }
+
+        // --- Listeners para Filtros (Sprint 2) ---
+        if (this.lojaPanel.getComboCategorias() != null) {
+            // TODO: Remover listeners antigos de comboCategorias se necessário
+            this.lojaPanel.getComboCategorias().addActionListener(e -> aplicarFiltrosEAtualizarProdutos());
+        } else { System.err.println("LojaController: ComboCategorias é null."); }
+
+        if (this.lojaPanel.getComboPlataformas() != null) {
+            // TODO: Remover listeners antigos de comboPlataformas se necessário
+            this.lojaPanel.getComboPlataformas().addActionListener(e -> aplicarFiltrosEAtualizarProdutos());
+        } else { System.err.println("LojaController: ComboPlataformas é null."); }
+
+        if (this.lojaPanel.getTxtBuscaNome() != null) {
+            // TODO: Remover listeners antigos de txtBuscaNome se necessário
+            // Para JTextField, pode ser melhor usar DocumentListener para updates em tempo real,
+            // mas ActionListener (disparado com Enter) também funciona.
+            this.lojaPanel.getTxtBuscaNome().addActionListener(e -> aplicarFiltrosEAtualizarProdutos());
+        } else { System.err.println("LojaController: TxtBuscaNome é null."); }
 
         // TODO SPRINT 2/3: Adicionar listener para o botão "Adicionar ao Carrinho"
-        // lojaPanel.getBtnAdicionarAoCarrinho().addActionListener(e -> adicionarItemAoCarrinho());
+        // if (this.lojaPanel.getBtnAdicionarAoCarrinho() != null) { ... }
 
         // TODO SPRINT 3: Adicionar listeners para "Remover Item", "Esvaziar Carrinho", "Finalizar Compra"
-        // lojaPanel.getBtnRemoverDoCarrinho().addActionListener(e -> removerItemDoCarrinho());
-        // lojaPanel.getBtnEsvaziarCarrinho().addActionListener(e -> esvaziarCarrinho());
-        // lojaPanel.getBtnFinalizarCompra().addActionListener(e -> finalizarCompra());
     }
-
 
     // --- MÉTODOS DE LÓGICA (A SEREM DESENVOLVIDOS NOS PRÓXIMOS SPRINTS) ---
 
     private void carregarFiltros() {
-        System.out.println("LojaController: Carregando opções para filtros (categorias, plataformas)...");
-        // Lógica do Sprint 2:
-        // 1. Usar CategoriaDAO e PlataformaDAO (ou ProdutoDAO com métodos específicos)
-        //    para buscar todas as categorias e plataformas distintas.
-        // List<String> categorias = ...; // categoriaDAO.listarNomes();
-        // List<String> plataformas = ...; // plataformaDAO.listarNomes();
-        // 2. Popular os JComboBoxes no LojaPanel.
-        // lojaPanel.popularFiltroCategorias(categorias);
-        // lojaPanel.popularFiltroPlataformas(plataformas);
+        System.out.println("LojaController: Carregando opções para filtros (categorias, plataformas)... (Lógica a implementar)");
     }
 
     private void carregarProdutosIniciais() {
+        if (produtoDAO == null || lojaPanel == null) {
+            System.err.println("LojaController (carregarProdutosIniciais): produtoDAO ou lojaPanel é null.");
+            return;
+        }
         System.out.println("LojaController: Carregando lista inicial de produtos...");
-        // Lógica do Sprint 2:
-        // 1. Usar ProdutoDAO para buscar todos os produtos ou um conjunto inicial.
-        // this.cacheProdutosExibidos = produtoDAO.listarTodosComEstoqueVisivel(); // Método exemplo
-        // 2. Atualizar a JList/JTable no LojaPanel.
-        // lojaPanel.atualizarListaDeProdutos(this.cacheProdutosExibidos);
+        List<Produto> todosProdutos = produtoDAO.listarTodosProdutos(); // Usa o método do seu ProdutoDAO
+        lojaPanel.exibirProdutos(todosProdutos); // Chama o método do seu LojaPanel
+        System.out.println( (todosProdutos != null ? todosProdutos.size() : 0) + " produtos carregados e tentados exibir.");
     }
 
     private void aplicarFiltrosEAtualizarProdutos() {
+        if (produtoDAO == null || lojaPanel == null) {
+            System.err.println("LojaController (aplicarFiltrosEAtualizarProdutos): produtoDAO ou lojaPanel é null.");
+            return;
+        }
         System.out.println("LojaController: Aplicando filtros e atualizando produtos...");
-        // Lógica do Sprint 2:
-        // 1. Obter os valores dos JComboBoxes e campo de texto de busca do LojaPanel.
-        // String categoriaFiltro = lojaPanel.getCategoriaSelecionada();
-        // String plataformaFiltro = lojaPanel.getPlataformaSelecionada();
-        // String nomeFiltro = lojaPanel.getTextoBuscaNome();
-        // 2. Chamar um método no ProdutoDAO para buscar produtos com base nesses filtros.
-        // this.cacheProdutosExibidos = produtoDAO.buscarPorFiltros(categoriaFiltro, plataformaFiltro, nomeFiltro);
-        // 3. Atualizar a JList/JTable no LojaPanel.
-        // lojaPanel.atualizarListaDeProdutos(this.cacheProdutosExibidos);
+
+        // Obter valores dos filtros do LojaPanel
+        // String categoriaSelecionada = (String) lojaPanel.getComboCategorias().getSelectedItem();
+        // String plataformaSelecionada = (String) lojaPanel.getComboPlataformas().getSelectedItem();
+        // String nomeBusca = lojaPanel.getTxtBuscaNome().getText();
+
+        // TODO: Converter nomes de categoria/plataforma para IDs se o DAO esperar IDs
+        // int idCategoriaFiltro = ... ;
+        // int idPlataformaFiltro = ... ;
+
+        // List<Produto> produtosFiltrados = produtoDAO.buscarProdutosPorFiltros(idCategoriaFiltro, idPlataformaFiltro, nomeBusca);
+        // lojaPanel.exibirProdutos(produtosFiltrados);
     }
 
     private void adicionarItemAoCarrinho() {
@@ -153,8 +180,8 @@ public class LojaController {
         System.out.println("LojaController: Esvaziando carrinho (a implementar)...");
         // Lógica do Sprint 3
         // this.carrinhoDeCompras.clear();
-        // lojaPanel.atualizarExibicaoCarrinho(this.carrinhoDeCompras); // Método no LojaPanel
-        // lojaPanel.atualizarTotalCarrinho(0.0); // Método no LojaPanel
+        // lojaPanel.atualizarExibicaoCarrinho(this.carrinhoDeCompras);
+        // lojaPanel.atualizarTotalCarrinho(0.0);
     }
 
     private void finalizarCompra() {
@@ -162,22 +189,23 @@ public class LojaController {
         // Lógica do Sprint 3
     }
 
-    /**
-     * Realiza o logout do usuário, limpando o estado da loja e
-     * retornando para o painel de login.
-     */
     public void fazerLogout() {
-        System.out.println("LojaController: Usuário " + (usuarioLogado != null ? usuarioLogado.getNome() : "N/A") + " fazendo logout.");
-        // Limpar estado da loja se necessário (carrinho, filtros, etc.)
-        // esvaziarCarrinho(); // Exemplo
-        // this.usuarioLogado = null; // Limpa o usuário logado no controller
+        System.out.println("LojaController: MÉTODO FAZERLOGOUT() CHAMADO!");
+        String nomeUsuario = (this.usuarioLogado != null ? this.usuarioLogado.getNome() : "N/A");
+        System.out.println("LojaController: Usuário " + nomeUsuario + " fazendo logout.");
 
-        // Se LojaPanel tiver um método para resetar sua UI:
-        // lojaPanel.resetarPainel();
+        esvaziarCarrinho();
+        this.usuarioLogado = null; // Limpa a referência ao usuário logado
 
-        // Informa a MainWindow para mostrar o painel de login
-        if (mainWindow != null) {
-            mainWindow.showPanel(MainWindow.LOGIN_PANEL);
+        if (this.lojaPanel != null) {
+            this.lojaPanel.resetarPainel(); // Pede ao painel para limpar sua UI
+        }
+
+        if (this.mainWindow != null) {
+            this.mainWindow.showPanel(MainWindow.LOGIN_PANEL);
+            System.out.println("LojaController: " + nomeUsuario + " deslogado, voltando para a home.");
+        } else {
+            System.err.println("LojaController (fazerLogout): mainWindow é null!");
         }
     }
 }
